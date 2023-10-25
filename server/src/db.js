@@ -1,17 +1,18 @@
-import mongoose from "mongoose"
-import dotenv from "dotenv"
-(dotenv).config({path:"variable.env"})
+import mysql from "mysql"
 
+const connection = mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    database:'prueba_tecnica_dev',
+    password:''
+})
 
-export const connectDB = async () => {
-    try {
-        await mongoose.connect(process.env.DB_Mongo,{
-            useNewUrlParser:true,
-            useUnifiedTopology: true
-        });
-        console.log("DB Conectada con exito")
-    } catch (error) {
-        console.log(error)
-        process.exit(1)
+connection.connect(function(err) {
+    if(err){
+        console.error('error in connecting database' + err.stack);
+        return;
     }
-}
+    console.log('Connected in ' + connection.threadId)
+})
+
+export default connection

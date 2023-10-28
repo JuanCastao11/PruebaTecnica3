@@ -1,11 +1,11 @@
-import connection from "../db";
+import database from '../db.js'
 
-export function agregarEmpleado(req, res) {
+export function añadirEmpleado(req, res) {
     const empleadoData = req.body;
     
     const sql = 'INSERT INTO empleado (nombre, email, sexo, area_id, boletin, descripcion) VALUES (?, ?, ?, ?, ?, ?)';
 
-    connection.query(sql, [empleadoData.nombre, empleadoData.email, empleadoData.sexo, empleadoData.area_id, empleadoData.boletin, empleadoData.descripcion], (error) => {
+    database.query(sql, [empleadoData.nombre, empleadoData.email, empleadoData.sexo, empleadoData.area_id, empleadoData.boletin, empleadoData.descripcion], (error) => {
         if (error) {
             console.error('Error al crear empleado: ', error);
             return res.status(500).json({ error: 'Error al crear el empleado' });
@@ -14,9 +14,11 @@ export function agregarEmpleado(req, res) {
     });
 }
 
+
+
 export function obtenerEmpleados(req, res) {
     const sql = 'SELECT * FROM empleado';
-    connection.query(sql, (error, results) => {
+    database.query(sql, (error, results) => {
         if (error) {
             console.error('Error al obtener empleados: ', error);
             return res.status(500).json({ error: 'Error al obtener empleados' });
@@ -28,7 +30,7 @@ export function obtenerEmpleados(req, res) {
 export function obtenerEmpleadoPorId(req, res) {
     const empleadoId = req.params.id;
     const sql = 'SELECT * FROM empleado WHERE id = ?';
-    connection.query(sql, [empleadoId], (error, results) => {
+    database.query(sql, [empleadoId], (error, results) => {
         if (error) {
             console.error('Error al obtener el empleado: ', error);
             return res.status(500).json({ error: 'Error al obtener el empleado' });
@@ -45,7 +47,7 @@ export function actualizarEmpleado(req, res) {
     const empleadoData = req.body;
     const sql = 'UPDATE empleado SET nombre = ?, email = ?, sexo = ?, area_id = ?, boletin = ?, descripcion = ? WHERE id = ?';
 
-    connection.query(sql, [empleadoData.nombre, empleadoData.email, empleadoData.sexo, empleadoData.area_id, empleadoData.boletin, empleadoData.descripcion, empleadoId], (error, results) => {
+    database.query(sql, [empleadoData.nombre, empleadoData.email, empleadoData.sexo, empleadoData.area_id, empleadoData.boletin, empleadoData.descripcion, empleadoId], (error, results) => {
         if (error) {
             console.error('Error al actualizar el empleado: ', error);
             return res.status(500).json({ error: 'Error al actualizar el empleado' });
@@ -61,7 +63,7 @@ export function eliminarEmpleado(req, res) {
     const empleadoId = req.params.id;
     const sql = 'DELETE FROM empleado WHERE id = ?';
 
-    connection.query(sql, [empleadoId], (error, results) => {
+    database.query(sql, [empleadoId], (error, results) => {
         if (error) {
             console.error('Error al eliminar el empleado: ', error);
             return res.status(500).json({ error: 'Error al eliminar el empleado' });

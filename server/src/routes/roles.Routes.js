@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-import { obtenerRol } from "../controllers/roles.controller";
+import { RecibirRoles } from "../controllers/rolesController.js";
 
 const router=Router();
 
-router.get('/roles',obtenerRol);
+router.get('/roles',RecibirRoles);
 
 
 export default router;

@@ -1,9 +1,10 @@
 import { Router } from "express";
 
-import { MostrarArea } from "../controllers/areaS.controller";
+import { Areas } from "../controllers/areasController.js";
 
-const router = Router();
+const router=Router();
 
-router.get('/area',MostrarArea);
+router.get('/areas',Areas);
+
 
 export default router;

@@ -1,5 +1,8 @@
 import express from "express"
 import cors from "cors"
+import empleadoRoute from './routes/empleados.Routes.js'
+import roles from './routes/roles.Routes.js'
+import areaRoutes from './routes/areas.routes.js'
 
 const app = express();
 
@@ -9,6 +12,10 @@ app.use(cors({
     origin:"http://localhost:5173",
     credentials:true
 }));
+
+app.use('/api',empleadoRoute)
+app.use('/api', roles)
+app.use('/api',areaRoutes)
 
 
 export default app;

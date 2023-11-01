@@ -1,32 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react';
 
 function Form() {
+  const [sexo, setSexo] = useState('');
+
+  const handleChange = (event) => {
+    setSexo(event.target.value);
+  };
+
   return (
     <>
-    <div className="form w-full  ">
-  <form action="" className="flex justify-center m-10">
-    <div className="w-[40%] m-10 ">
-      <div className="mb-4">
-        <label htmlFor="nombre" className="block">Nombre Completo</label>
-        <input type="text" id="nombre" className="w-full border-2 rounded-md p-2" />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="correo" className="block">Correo Electronico</label>
-        <input type="text" id="correo" className="w-full border-2 rounded-md p-2" />
-      </div>
-      <div className="flex mb-4">
-        <label className="block mr-4">Sexo</label>
-        <div className="flex flex-col">
-          <label htmlFor="femenino" className="mb-1">
-            Femenino*
-            <input type="radio" id="femenino" className="mr-2" />
-          </label>
-          <label htmlFor="masculino">
-            Masculino*
-            <input type="radio" id="masculino" className="mr-2" />
-          </label>
-        </div>
-      </div>
+      <div className="form w-full  ">
+        <form action="" className="flex justify-center m-10">
+          <div className="w-[40%] m-10 ">
+            <div className="mb-4">
+              <label htmlFor="nombre" className="block">Nombre Completo</label>
+              <input type="text" id="nombre" className="w-full border-2 rounded-md p-2"/>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="correo" className="block">Correo Electronico</label>
+              <input type="text" id="correo" className="w-full border-2 rounded-md p-2"/>
+            </div>
+            <div className="flex mb-4">
+              <label className="block mr-4">Sexo</label>
+              <div className="flex flex-col">
+                <label htmlFor="femenino" className="mb-1">Femenino*
+                <input type="radio" id="femenino" name="sexo" value="femenino" checked={sexo === 'femenino'} onChange={handleChange} className="mr-2"/>
+                </label>
+                <label htmlFor="masculino">Masculino*
+                  <input type="radio" id="masculino" name="sexo" value="masculino" checked={sexo === 'masculino'} onChange={handleChange} className="mr-2" />
+                </label>
+              </div>
+            </div>
       <div className="mb-4">
         <label htmlFor="area" className="block">Area</label>
         <select id="area" className="w-full border-2 rounded-md p-2">

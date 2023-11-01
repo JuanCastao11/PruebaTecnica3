@@ -16,7 +16,7 @@ export function añadirEmpleado(req, res) {
 
 
 
-export function obtenerEmpleados(req, res) {
+export function mostrarEmpleados(req, res) {
     const sql = 'SELECT * FROM empleado';
     database.query(sql, (error, results) => {
         if (error) {
@@ -27,7 +27,7 @@ export function obtenerEmpleados(req, res) {
     });
 }
 
-export function obtenerEmpleadoPorId(req, res) {
+export function mostrarEmpleadoPorId(req, res) {
     const empleadoId = req.params.id;
     const sql = 'SELECT * FROM empleado WHERE id = ?';
     database.query(sql, [empleadoId], (error, results) => {

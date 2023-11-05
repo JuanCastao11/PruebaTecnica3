@@ -42,14 +42,14 @@ function Form() {
       <div className="mb-4">
         <label htmlFor="descripcion" className="block">Descripción</label>
         <textarea id="descripcion" className="w-full border-2 rounded-md p-2"></textarea>
+        <div className="mb-1 ml-[9%]">
+            <input type="checkbox" id="boletin" className="mr-2" />
+            <label htmlFor="boletin">Deseo recibir boletin informativo</label>
+          </div>
       </div>
       <div className="flex mb-4">
         <label className="block mr-4">Roles*</label>
         <div className="flex flex-col">
-          <div className="mb-1">
-            <input type="checkbox" id="boletin" className="mr-2" />
-            <label htmlFor="boletin">Deseo recibir boletin informativo</label>
-          </div>
           <div className="mb-1">
             <input type="checkbox" id="Profesional" className="mr-2" />
             <label htmlFor="Profesional">Profesional de proyectos - Desarrollador</label>

@@ -25,8 +25,7 @@ export function areasProvider({children}) {
             
         }
     }
-
-
+    
     return(
         <areasContext.Provider value={{
             areas, mostrarAreas

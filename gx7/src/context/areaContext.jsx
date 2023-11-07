@@ -1,7 +1,7 @@
-import { newContext, useContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import {AreasRequest} from '../api/areas';
 
-const areasContext = newContext();
+const areasContext = createContext();
 
 export const useAreas = () => {
     const context = useContext(areasContext);
@@ -11,7 +11,7 @@ export const useAreas = () => {
     return context;
 }
 
-export function areasProvider({children}) {
+export function AreasProvider({children}) {
     const [areas, setAreas] = useState([]);
 
     const mostrarAreas = async () => {

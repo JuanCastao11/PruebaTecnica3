@@ -12,10 +12,18 @@ function Form() {
     setSexo(event.target.value);
   };
 
-  const { empleados, mostrarEmpleado,añadirEmpleados } = useEmpleados();
+  const { empleados, mostrarEmpleado,añadirEmpleados,deleteEmpleados } = useEmpleados();
   const { roles, recibirRoles } = useRoles();
   const { areas, mostrarAreas } = useAreas();
   const { register, handleSubmit } = useForm();
+  const [BoletinQ, setBoletinQ] = useState(false);
+  const [isEditing, setEditing] = useState(false);
+  const [empleadoEdit, setEmpleadoEdit] = useState(null);
+
+  const areNameMap = areas.reduce((acc,area) => {
+    acc[area.id] = area.nombre;
+    return acc;
+  }, {});
 
   useEffect(() => {
     mostrarEmpleado();
@@ -23,15 +31,13 @@ function Form() {
     mostrarAreas();
   }, []);
 
-  const [rolElegido, setRolElegido] = useState([]);
+  const handleBoletinQChange = (event) => {
+    setBoletinQ(event.target.checked);
+  }
 
-  const handleRolChange = (rolesId) => {
-    if (rolElegido.includes(rolesId)) {
-      setRolElegido(rolElegido.filter((id) => id !== rolesId));
-    } else {
-      setRolElegido([...rolElegido,rolesId]);
-    }
-  };
+  const handleDeleteEmpleado = (empleadoId) => {
+    deleteEmpleados(empleadoId);
+  }
 
   const onSubmit = handleSubmit((data) => {
     const empleadosData = {
@@ -40,12 +46,11 @@ function Form() {
       sexo: data.sexo,
       area_id: data.area_id, 
       descripcion: data.descripcion,
-      roles: rolElegido,      
+      boletin: BoletinQ ? 1 : 0,      
     };
     añadirEmpleados(empleadosData);
   });
-
-
+ 
   return (
     <>
       <div className="form w-full  ">
@@ -72,40 +77,36 @@ function Form() {
             </div>
       <div className="mb-4">
         <label htmlFor="area" className="block">Area</label>
-        <select id="area" className="w-full border-2 rounded-md p-2" {...register("area_id")}>
-          <option value="vacio"></option>
-          <option value="Estudiante">Estudiante</option>
-          <option value="Profesor">Profesor</option>
+        <select  name='area_id' className=" w-full border-2 rounded-md p-2" {...register("area_id")}>
+        {areas.map((area) => (
+              <option key={area.id} value={area.id}>
+                {area.nombre}
+              </option>
+            ))}
         </select>
       </div>
       <div className="mb-4">
         <label htmlFor="descripcion" className="block">Descripción</label>
-        <textarea id="descripcion" className="w-full border-2 rounded-md p-2"></textarea>
+        <textarea id="descripcion" className="w-full border-2 rounded-md p-2 " {...register("descripcion")}></textarea>
         <div className="mb-1 ml-[9%]">
-            <input type="checkbox" id="boletin" className="mr-2" />
+            <input type="checkbox" id="boletin" onChange={handleBoletinQChange} className="mr-2" />
             <label htmlFor="boletin">Deseo recibir boletin informativo</label>
           </div>
       </div>
-      <div className="flex mb-4">
-        <label className="block mr-4">Roles*</label>
-        <div className="flex flex-col">
-          <div className="mb-1">
-            <input type="checkbox" id="Profesional" className="mr-2" />
-            <label htmlFor="Profesional">Profesional de proyectos - Desarrollador</label>
+      <div className="form__areas">
+            {roles.map((rol) => (
+              <div className='roles' key={rol.id}>
+                <label>
+                  <input type="checkbox" />
+                  {rol.nombre}
+                </label>
+                <input type="hidden" name="roles" />
+              </div>
+            ))}
           </div>
-          <div className="mb-1">
-            <input type="checkbox" id="Gerente estrategico" className="mr-2" />
-            <label htmlFor="Gerente estrategico">Gerente estrategico</label>
-          </div>
-          <div className="mb-1">
-            <input type="checkbox" id="Auxiliar Administrativo" className="mr-2" />
-            <label htmlFor="Auxiliar Administrativo">Auxiliar Administrativo</label>
-          </div>
-        </div>
-      </div>
       <div className="boton flex justify-center">
-      <button type="button" className="text-white bg-gradient-to-r w-32 from-blue-500 via-blue-600 to-blue-700
-     focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-4 mb-2 ">Enviar</button>
+      <button className="text-white bg-gradient-to-r w-32 from-blue-500 via-blue-600 to-blue-700
+     focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-4 mb-2 " >Enviar</button>
       </div>
     </div>
   </form>
